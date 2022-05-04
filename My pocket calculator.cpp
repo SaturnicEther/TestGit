@@ -10,13 +10,15 @@ double term();
 double power();
 double fact();
 double num();
-
+//double double double
 int main()
 {
-	string input;
-	mistype(input);
-	input = exp();
-	cout << "Result: " << input << endl;
+	cout << "Enter the string: ";
+	string output;
+	mistype(output);
+	double doutput;
+	doutput = exp();
+	cout << "Result: " << doutput << endl;
 	return 0;
 }
 bool mistype(string str)
@@ -26,9 +28,9 @@ bool mistype(string str)
 	{ 
 		'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-        'à', 'á', 'â', 'ã', 'ä', 'å', '¸', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ',
-        'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', '¨', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß',
-        '~', '`', '!', '@', '#', '$', '&', '_', ':', ';','<', '>', ' ','¹', '?', '|', '{', '}'
+        'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я',
+        'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я',
+        '~', '`', '!', '@', '#', '$', '&', '_', ':', ';','<', '>', ' ','№', '?', '|', '{', '}'
 	};
 	str = "((19*8)-15+2^2/1.5)*7";
 	int found;
@@ -47,11 +49,12 @@ bool mistype(string str)
 	}
 	return false;
 }
-double exp()
+string exp()
 {
 	double res;
 	char op;
 	res = term();
+	string s = to_string(res);
 	while (true)
 	{
 		op = cin.get();
@@ -65,16 +68,17 @@ double exp()
 			break;
 		default:
 			cin.putback(op);
-			return res;
+			return s;
 		}
 	}
 }
-double term()
+string term()
 {
 	double res;
 	char op;
 	double temp;
 	res = power();
+	string s = to_string(res);
 	while (true)
 	{
 		op = cin.get();
@@ -87,19 +91,18 @@ double term()
 			temp = power();
 			if (temp == 0.0)
 			{
-				cerr << "Cannot be deleted on zero!";
+				cerr << "Cannot be divided on zero!";
 				exit(-1);
 			}
 			res /= temp;
 			break;
 		default:
 			cin.putback(op);
-			return res;
+			return s;
 		}
 	}
 }
-//aaa
-double power()
+string power()
 {
 	char op;
 	string v = "((19*8)-15+2^2/1.5)*7";
@@ -127,12 +130,13 @@ double power()
 	}
 	return v[0];
 }
-double fact()
+string fact()
 {
 	double res;
 	char bracket;
 	int sign = 1;
 	bracket = cin.get();
+	string s = to_string(res * sign);
 	while (bracket == ' ')
 	{
 		bracket = cin.get();
@@ -165,15 +169,16 @@ double fact()
 		cin.putback(bracket);
 		res = num();
 	}
-	return sign * res;
+	return s;
 }
-double num()
+string num()
 {
 	double res = 0.0;
 	char digit;
 	double k = 10.0;
 	int sign = 1;
 	digit = cin.get();
+	string n = to_string(sign * res);
 	switch (digit)
 	{
 	case '-':
@@ -229,5 +234,5 @@ double num()
 	{
 		cin.putback(digit);
 	}
-	return sign * res;
+	return n;
 }
