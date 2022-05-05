@@ -5,18 +5,18 @@
 using namespace std;
 
 bool mistype(string);
-double exp();
-double term();
-double power();
-double fact();
-double num();
-//double double double
+string exp();
+string term();
+string power();
+string fact();
+string num();
+
 int main()
 {
 	cout << "Enter the string: ";
 	string output;
 	mistype(output);
-	double doutput;
+	string doutput;
 	doutput = exp();
 	cout << "Result: " << doutput << endl;
 	return 0;
@@ -51,10 +51,9 @@ bool mistype(string str)
 }
 string exp()
 {
-	double res;
+	string res;
 	char op;
 	res = term();
-	string s = to_string(res);
 	while (true)
 	{
 		op = cin.get();
@@ -68,17 +67,16 @@ string exp()
 			break;
 		default:
 			cin.putback(op);
-			return s;
+			return res;
 		}
 	}
 }
 string term()
 {
-	double res;
+	string res;
 	char op;
-	double temp;
+	string temp;
 	res = power();
-	string s = to_string(res);
 	while (true)
 	{
 		op = cin.get();
@@ -98,7 +96,7 @@ string term()
 			break;
 		default:
 			cin.putback(op);
-			return s;
+			return res;
 		}
 	}
 }
@@ -132,11 +130,10 @@ string power()
 }
 string fact()
 {
-	double res;
+	string res;
 	char bracket;
-	int sign = 1;
+	string sign = "1";
 	bracket = cin.get();
-	string s = to_string(res * sign);
 	while (bracket == ' ')
 	{
 		bracket = cin.get();
@@ -169,7 +166,7 @@ string fact()
 		cin.putback(bracket);
 		res = num();
 	}
-	return s;
+	return res * sign;
 }
 string num()
 {
