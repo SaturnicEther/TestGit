@@ -1,57 +1,23 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include <iomanip>
 using namespace std;
-
-bool mistype(string);
-string exp();
-string term();
-string power();
-string fact();
-string num();
+double exp();
+double term();
+double power();
+double fact();
+double num();
 
 int main()
 {
-	cout << "Enter the string: ";
-	string output;
-	mistype(output);
-	string doutput;
-	doutput = exp();
-	cout << "Result: " << doutput << endl;
+	double n;
+	cout << "Enter expression: ";
+	n = exp();
+	cout << "Result: " << n << endl;
+	cin.get();
 	return 0;
 }
-bool mistype(string str)
+double exp()
 {
-	const int N = 137;
-	char arr[N] = 
-	{ 
-		'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-        'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я',
-        'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я',
-        '~', '`', '!', '@', '#', '$', '&', '_', ':', ';','<', '>', ' ','№', '?', '|', '{', '}'
-	};
-	str = "((19*8)-15+2^2/1.5)*7";
-	int found;
-	for (int I = 0; I < N; I++)
-	{
-		found = str.find(arr[I]);
-		if (found != string::npos)
-		{
-			cerr << "A mistype!";
-			exit(-1);
-		}
-		else
-		{
-			return false;
-		}
-	}
-	return false;
-}
-string exp()
-{
-	string res;
+	double res;
 	char op;
 	res = term();
 	while (true)
@@ -71,11 +37,11 @@ string exp()
 		}
 	}
 }
-string term()
+double term()
 {
-	string res;
+	double res;
 	char op;
-	string temp;
+	double temp;
 	res = power();
 	while (true)
 	{
@@ -85,7 +51,7 @@ string term()
 		case '*':
 			res *= power();
 			break;
-		case '/':
+		case '-':
 			temp = power();
 			if (temp == 0.0)
 			{
@@ -100,11 +66,25 @@ string term()
 		}
 	}
 }
-string power()
+double power()
 {
+	double res;
 	char op;
-	string v = "((19*8)-15+2^2/1.5)*7";
-	v.push_back(fact());
+	const int N = 256;
+	int I = 0;
+	int K = 50;
+	double arr[N]{};
+	double arr2[N]{};
+	double full[N]{};
+	int Z = I + K;
+	for (I = 0; I < N; I++)
+	{
+		cin >> arr[I];
+	}
+	for (I=0; I < K; I++)
+	{
+		arr2[K] = fact();
+	}
 	while (true)
 	{
 		op = cin.get();
@@ -114,25 +94,28 @@ string power()
 		}
 		if (op == '^')
 		{
-			v.push_back(fact());
+			for (I = K; I < Z; I++)
+			{
+				full[I] = arr2[I - K];
+			}
 		}
 		else
 		{
 			cin.putback(op);
 			break;
 		}
-		for (int I = v.size() - 1; I > 0; I--)
-		{
-			v[I - 1] = pow(v[I - 1], v[I]);
-		}
 	}
-	return v[0];
+	for (I = full[Z - 1]; I > 0; I--)
+	{
+		full[I - 1] = pow(full[I - 1], full[I]);
+	}
+	return full[0];
 }
-string fact()
+double fact()
 {
-	string res;
+	double res;
 	char bracket;
-	string sign = "1";
+	int sign = 1;
 	bracket = cin.get();
 	while (bracket == ' ')
 	{
@@ -142,7 +125,6 @@ string fact()
 	{
 	case '-':
 		sign = -1;
-		break;
 	case '+':
 		bracket = cin.get();
 		break;
@@ -166,16 +148,15 @@ string fact()
 		cin.putback(bracket);
 		res = num();
 	}
-	return res * sign;
+	return sign * res;
 }
-string num()
+double num()
 {
 	double res = 0.0;
 	char digit;
 	double k = 10.0;
 	int sign = 1;
 	digit = cin.get();
-	string n = to_string(sign * res);
 	switch (digit)
 	{
 	case '-':
@@ -185,8 +166,8 @@ string num()
 		if (digit != '+')
 		{
 			cin.putback(digit);
-			break;
 		}
+		break;
 	}
 	while (true)
 	{
@@ -195,7 +176,7 @@ string num()
 		{
 			digit = cin.get();
 		}
-		if (digit >= '0' && digit <= '9')
+		if(digit>='0' && digit<='9')
 		{
 			res = res * 10.0 + (digit - '0');
 		}
@@ -231,5 +212,5 @@ string num()
 	{
 		cin.putback(digit);
 	}
-	return n;
+	return res * sign;
 }
