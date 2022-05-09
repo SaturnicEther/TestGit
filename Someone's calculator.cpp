@@ -1,4 +1,4 @@
-/*#include <iostream>
+#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -214,4 +214,4 @@ double num()
         cin.putback(digit);
 
     return sign * res;
-}*/
+}
