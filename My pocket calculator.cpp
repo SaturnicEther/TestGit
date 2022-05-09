@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 double exp();
 double term();
@@ -68,23 +69,10 @@ double term()
 }
 double power()
 {
-	double res;
 	char op;
-	const int N = 256;
-	int I = 0;
-	int K = 50;
-	double arr[N]{};
-	double arr2[N]{};
-	double full[N]{};
-	int Z = I + K;
-	for (I = 0; I < N; I++)
-	{
-		cin >> arr[I];
-	}
-	for (I=0; I < K; I++)
-	{
-		arr2[K] = fact();
-	}
+	vector<double> v;
+	v.push_back(fact());
+
 	while (true)
 	{
 		op = cin.get();
@@ -94,10 +82,7 @@ double power()
 		}
 		if (op == '^')
 		{
-			for (I = K; I < Z; I++)
-			{
-				full[I] = arr2[I - K];
-			}
+			v.push_back(fact());
 		}
 		else
 		{
@@ -105,11 +90,11 @@ double power()
 			break;
 		}
 	}
-	for (I = full[Z - 1]; I > 0; I--)
+	for (int I = v.size() - 1; I > 0; I--)
 	{
-		full[I - 1] = pow(full[I - 1], full[I]);
+		v[I - 1] = pow(v[I - 1], v[I]);
 	}
-	return full[0];
+	return v[0];
 }
 double fact()
 {
@@ -176,7 +161,7 @@ double num()
 		{
 			digit = cin.get();
 		}
-		if(digit>='0' && digit<='9')
+		if (digit >= '0' && digit <= '9')
 		{
 			res = res * 10.0 + (digit - '0');
 		}
